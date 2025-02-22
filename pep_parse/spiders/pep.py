@@ -1,10 +1,15 @@
 import scrapy
 
-
 class PepSpider(scrapy.Spider):
     name = 'pep'
     allowed_domains = ['peps.python.org']
-    start_urls = ['http://peps.python.org/']
+    start_urls = ['https://peps.python.org/']
 
     def parse(self, response):
-        pass
+        print('=================================================================================================')
+        print('|'*100)
+        print(response)
+        print('|'*100)
+        print('|'*100)
+
+
