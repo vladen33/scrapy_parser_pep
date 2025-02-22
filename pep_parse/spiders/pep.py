@@ -1,3 +1,4 @@
+import re
 from urllib.parse import urljoin
 
 import scrapy
@@ -9,22 +10,33 @@ class PepSpider(scrapy.Spider):
     start_urls = ['https://peps.python.org/']
 
     def parse(self, response):
-        print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-        # shortlinks = response.xpath('//table[contains(@class, "pep-zero-table")]/tbody/tr/td[3]/a').xpath('@href')
+        shortlinks = response.xpath('//table[contains(@class, "pep-zero-table")]/tbody/tr/td[3]/a').xpath('@href')
 
-        links = [
-            urljoin(self.start_urls[0], shortlink.get()) for shortlink in (
-                response.xpath('//table[contains(@class, "pep-zero-table")]'
-                               '/tbody/tr/td[3]/a').xpath('@href')
-            )
-        ]
+        counter = 1
+        for link in shortlinks:
+            counter += 1
+            if counter > 5:
+                break
+            yield response.follow(link, callback=self.parse_pep)
+            # print(link)
 
 
-        for link in links:
-            print(link)
-        # for pep_shortlink in pep_shortlinks:
-        #     # print(self.start_urls[0], pep_shortlink.get())
-        #     pep_link = urljoin(self.start_urls[0], pep_shortlink.get())
-        #     print(pep_link)
+    def parse_pep(self, response):
+        pep_title = response.css('h1.page-title::text').get()
+        result = re.fullmatch(r'PEP (?P<number>\d{1,4}) – (?P<name>.*)', pep_title)
+        number = result.group('number')
+        name = result.group('name')
+        status = response.xpath('//abbr[1]/text()').get()
+
+        print('NUMBER = ', result.group('number'))
+        print('NAME = ', result.group('name'))
+        print('STATUS = ', status)
+
+        # print('>>=='*20, res.groups())
+
+
+
+
+        # yield {'aaa': 'AAAAAA'}
 
 
