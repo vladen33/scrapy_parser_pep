@@ -21,7 +21,7 @@ python3 -m pip install -U pip
 ```bash
 pip install -r requirements.txt
 ```
-4. Запусnbnt парсер pep:
+4. Запустите парсер pep:
 ```
 scrapy crawl pep
 ```
