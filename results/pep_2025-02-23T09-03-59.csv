@@ -1,0 +1,10 @@
+number,name,status
+1,PEP Purpose and Guidelines,Active
+2,Procedure for Adding New Modules,Active
+11,CPython platform support,Active
+8,Style Guide for Python Code,Active
+10,Voting Guidelines,Active
+13,Python Language Governance,Active
+7,Style Guide for C Code,Active
+4,Deprecation of Standard Modules,Active
+12,Sample reStructuredText PEP Template,Active
