@@ -2,13 +2,14 @@ import re
 
 import scrapy
 
+from pep_parse.constants import PEP_DOMAIN
 from pep_parse.items import PepParseItem
 
 
 class PepSpider(scrapy.Spider):
     name = 'pep'
-    allowed_domains = ['peps.python.org']
-    start_urls = ['https://peps.python.org/']
+    allowed_domains = [PEP_DOMAIN]
+    start_urls = [f'https://{domain}/' for domain in allowed_domains]
 
     def parse(self, response):
         shortlinks = response.xpath(
